@@ -1,5 +1,6 @@
 package com.example.automobilesapi.modules.car.model;
 
+import com.example.automobilesapi.modules.car.dto.CarroDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -43,5 +44,27 @@ public class Carro {
     @Column(name = "AUTONOMIA", nullable = false)
     private String autonomia;
 
+    @Column(name = "VALOR_DIA", nullable = false)
+    private Double valorDia;
+
+    @Column(name = "TAXA", nullable = false)
+    private Double taxa;
+
+    public CarroDTO convertToDTO() {
+        return new CarroDTO(
+                this.getId(),
+                this.getPlaca(),
+                this.getModelo(),
+                this.getDescricao(),
+                this.getDisponibilidade(),
+                this.getCombustivel(),
+                this.getNome(),
+                this.getMotor(),
+                this.getPotencia(),
+                this.getAutonomia(),
+                this.getValorDia(),
+                this.getTaxa()
+        );
+    }
 
 }
