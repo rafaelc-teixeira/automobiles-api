@@ -38,8 +38,8 @@ public class CarroController {
 
     @PostMapping
     public ResponseEntity<CarroDTO> createCarro(@RequestBody CarroDTO carroDTO) {
-        CarroDTO savedCarro = carroService.createCarro(carroDTO.toCarro());
-        return ResponseEntity.created(URI.create("/carros/" + savedCarro.getId())).body(savedCarro);
+        carroService.createCarro(carroDTO.toCarro());
+        return ResponseEntity.created(URI.create("/api/carro")).body(carroDTO);
     }
 
     @PutMapping("/{id}")

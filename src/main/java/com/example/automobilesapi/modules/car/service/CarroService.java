@@ -18,29 +18,28 @@ public class CarroService {
     private CarroRepository carroRepository;
 
     public List<CarroDTO> getAllCarros() {
-        List<Carro> carros = (List<Carro>) carroRepository.findAll();
+        List<Carro> carros = carroRepository.findAllDisponiveis();
         return carros.stream()
                 .map(this::convertToDTO)
                 .collect(Collectors.toList());
     }
 
     public CarroDTO getCarroById(Integer id) {
-        Optional<Carro> optionalCarro = carroRepository.getCarroById(id);
-        if (optionalCarro.isPresent()) {
-            return optionalCarro.get().convertToDTO();
+        List<Carro> optionalCarro = carroRepository.getCarroById(id);
+        if (!optionalCarro.isEmpty()) {
+            return optionalCarro.get(0).convertToDTO();
         } else {
             throw new ResourceNotFoundException("Carro not found with id " + id);
         }
     }
 
-    public CarroDTO createCarro(Carro carro) {
-        Carro savedCarro = carroRepository.createCarro(carro);
-        return convertToDTO(savedCarro);
+    public void createCarro(Carro carro) {
+        carroRepository.createCarro(carro);
     }
 
     public CarroDTO updateCarro(Integer id, Carro carro) {
-        Optional<Carro> optionalCarro = carroRepository.getCarroById(id);
-        if (optionalCarro.isPresent()) {
+        List<Carro> optionalCarro = carroRepository.getCarroById(id);
+        if (!optionalCarro.isEmpty()) {
             carro.setId(id);
             Carro updatedCarro = carroRepository.updateCarro(carro);
             return convertToDTO(updatedCarro);

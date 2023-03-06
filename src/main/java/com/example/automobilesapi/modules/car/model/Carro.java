@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 public class Carro {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column(name = "PLACA", nullable = false)
