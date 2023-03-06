@@ -13,6 +13,7 @@ import java.util.Optional;
 @Repository
 public interface CarroRepository extends CrudRepository<Carro, Integer> {
 
+    @Modifying
     @Query(value = "SELECT * FROM CARRO WHERE id = ?1", nativeQuery = true)
     Optional<Carro> getCarroById(Integer id);
 
@@ -33,14 +34,14 @@ public interface CarroRepository extends CrudRepository<Carro, Integer> {
     @Query(value = "DELETE FROM CARRO WHERE id = ?1", nativeQuery = true)
     void deleteCarro(Integer id);
 
-    @Query(value = "SELECT * FROM CARRO WHERE DISPONIBILIDADE = TRUE", nativeQuery = true)
-    List<Carro> findAllDisponiveis();
-
-    @Query(value = "SELECT * FROM CARRO WHERE ID = :id AND DISPONIBILIDADE = TRUE", nativeQuery = true)
-    Optional<Carro> findDisponivelById(@Param("id") Integer id);
-
-    @Modifying
-    @Query(value = "UPDATE CARRO SET DISPONIBILIDADE = :disponibilidade WHERE ID = :id", nativeQuery = true)
-    void updateDisponibilidadeById(@Param("id") Integer id, @Param("disponibilidade") Boolean disponibilidade);
+//    @Query(value = "SELECT * FROM CARRO WHERE DISPONIBILIDADE = TRUE", nativeQuery = true)
+//    List<Carro> findAllDisponiveis();
+//
+//    @Query(value = "SELECT * FROM CARRO WHERE ID = :id AND DISPONIBILIDADE = TRUE", nativeQuery = true)
+//    Optional<Carro> findDisponivelById(@Param("id") Integer id);
+//
+//    @Modifying
+//    @Query(value = "UPDATE CARRO SET DISPONIBILIDADE = :disponibilidade WHERE ID = :id", nativeQuery = true)
+//    void updateDisponibilidadeById(@Param("id") Integer id, @Param("disponibilidade") Boolean disponibilidade);
 
 }
