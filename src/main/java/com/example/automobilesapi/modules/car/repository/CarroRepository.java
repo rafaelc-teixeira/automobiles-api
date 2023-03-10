@@ -14,13 +14,13 @@ import java.util.List;
 public interface CarroRepository extends CrudRepository<Carro, Integer> {
 
 
-    @Query(value = "SELECT * FROM CARRO WHERE id = ?1", nativeQuery = true)
+    @Query(value = "SELECT * FROM CARRO WHERE ID = ?1", nativeQuery = true)
     List<Carro> getCarroById(Integer id);
 
 
     @Transactional
     @Modifying
-    @Query(value = "INSERT INTO CARRO (autonomia, combustivel, descricao, disponibilidade, modelo, motor, nome, placa, potencia, taxa, valor_dia) " +
+    @Query(value = "INSERT INTO CARRO (AUTONOMIA, COMBUSTIVEL, DESCRICAO, DISPONIBILIDADE, MODELO, MOTOR, NOME, PLACA, POTENCIA, TAXA, VALOR_DIA) " +
             "VALUES (:#{#carro.autonomia}, :#{#carro.combustivel}, :#{#carro.descricao}, :#{#carro.disponibilidade}, :#{#carro.modelo}, " +
             ":#{#carro.motor}, :#{#carro.nome}, :#{#carro.placa}, :#{#carro.potencia}, :#{#carro.taxa}, :#{#carro.valorDia})", nativeQuery = true)
     void createCarro(@Param("carro") Carro carro);
@@ -30,12 +30,12 @@ public interface CarroRepository extends CrudRepository<Carro, Integer> {
     @Query(value = "UPDATE CARRO SET PLACA = :#{#carro.placa}, MODELO = :#{#carro.modelo}, DESCRICAO = :#{#carro.descricao}, " +
             "DISPONIBILIDADE = :#{#carro.disponibilidade}, COMBUSTIVEL = :#{#carro.combustivel}, NOME = :#{#carro.nome}, " +
             "MOTOR = :#{#carro.motor}, POTENCIA = :#{#carro.potencia}, AUTONOMIA = :#{#carro.autonomia}, VALOR_DIA = :#{#carro.valorDia}, TAXA = :#{#carro.taxa} " +
-            "WHERE id = :#{#carro.id}", nativeQuery = true)
-    Carro updateCarro(@Param("carro") Carro carro);
+            "WHERE ID = :#{#carro.id}", nativeQuery = true)
+    void updateCarro(@Param("carro") Carro carro);
 
     @Transactional
     @Modifying
-    @Query(value = "DELETE FROM CARRO WHERE id = ?1", nativeQuery = true)
+    @Query(value = "DELETE FROM CARRO WHERE ID = ?1", nativeQuery = true)
     void deleteCarro(Integer id);
 
     @Query(value = "SELECT * FROM CARRO WHERE DISPONIBILIDADE = TRUE", nativeQuery = true)

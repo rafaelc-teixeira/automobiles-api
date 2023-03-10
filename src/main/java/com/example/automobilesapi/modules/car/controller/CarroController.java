@@ -29,11 +29,11 @@ public class CarroController {
 
     @GetMapping("/{id}")
     public ResponseEntity<CarroDTO> getCarroById(@PathVariable Integer id) {
-        CarroDTO carro = carroService.getCarroById(id);
-        if (carro == null) {
+        CarroDTO carroDTO = carroService.getCarroById(id);
+        if (carroDTO == null) {
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(carro);
+        return ResponseEntity.ok(carroDTO);
     }
 
     @PostMapping
@@ -44,8 +44,9 @@ public class CarroController {
 
     @PutMapping("/{id}")
     public ResponseEntity<CarroDTO> updateCarro(@PathVariable Integer id, @RequestBody CarroDTO carroDTO) {
-        CarroDTO updatedCarro = carroService.updateCarro(id, carroDTO.toCarro());
-        return ResponseEntity.ok(updatedCarro);
+        carroService.updateCarro(id, carroDTO.toCarro());
+        carroDTO.setId(id);
+        return ResponseEntity.ok(carroDTO);
     }
 
     @DeleteMapping("/{id}")

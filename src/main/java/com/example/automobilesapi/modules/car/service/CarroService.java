@@ -4,18 +4,20 @@ import com.example.automobilesapi.config.exception.ResourceNotFoundException;
 import com.example.automobilesapi.modules.car.dto.CarroDTO;
 import com.example.automobilesapi.modules.car.model.Carro;
 import com.example.automobilesapi.modules.car.repository.CarroRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
 public class CarroService {
 
-    @Autowired
-    private CarroRepository carroRepository;
+
+    private final CarroRepository carroRepository;
+
+    public CarroService(CarroRepository carroRepository) {
+        this.carroRepository = carroRepository;
+    }
 
     public List<CarroDTO> getAllCarros() {
         List<Carro> carros = carroRepository.findAllDisponiveis();
@@ -37,20 +39,19 @@ public class CarroService {
         carroRepository.createCarro(carro);
     }
 
-    public CarroDTO updateCarro(Integer id, Carro carro) {
+    public void updateCarro(Integer id, Carro carro) {
         List<Carro> optionalCarro = carroRepository.getCarroById(id);
         if (!optionalCarro.isEmpty()) {
             carro.setId(id);
-            Carro updatedCarro = carroRepository.updateCarro(carro);
-            return convertToDTO(updatedCarro);
+            carroRepository.updateCarro(carro);
         } else {
             throw new ResourceNotFoundException("Carro not found with id " + id);
         }
     }
 
     public void deleteCarro(Integer id) {
-        Optional<Carro> optionalCarro = carroRepository.findById(id);
-        if (optionalCarro.isPresent()) {
+        List<Carro> optionalCarro = carroRepository.getCarroById(id);
+        if (optionalCarro.isEmpty()) {
             carroRepository.deleteCarro(id);
         } else {
             throw new ResourceNotFoundException("Carro not found with id " + id);
@@ -58,9 +59,7 @@ public class CarroService {
     }
 
     private CarroDTO convertToDTO(Carro carro) {
-        return new CarroDTO(carro.getId(), carro.getPlaca(), carro.getModelo(),
-                carro.getDescricao(), carro.getDisponibilidade(), carro.getCombustivel(),
-                carro.getNome(), carro.getMotor(), carro.getPotencia(), carro.getAutonomia(), carro.getValorDia(), carro.getTaxa());
+        return carro.convertToDTO();
     }
 
     private Carro convertToEntity(CarroDTO carroDTO) {
