@@ -1,0 +1,23 @@
+version: '3'
+
+services:
+  automobiles-db:
+    container_name: automobiles-db
+    image: postgres
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_DB: automobiles-db
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: 123456
+
+  automobiles-api:
+    build: .
+    ports:
+      - "3333:3333"
+    depends_on:
+      - automobiles-db
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://automobiles-db:5432/automobiles-db
+      SPRING_DATASOURCE_USERNAME: admin
+      SPRING_DATASOURCE_PASSWORD: 123456
