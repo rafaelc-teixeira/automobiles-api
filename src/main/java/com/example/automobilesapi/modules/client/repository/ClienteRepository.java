@@ -1,5 +1,6 @@
 package com.example.automobilesapi.modules.client.repository;
 
+import com.example.automobilesapi.modules.client.dto.ClienteDTOAdminRequest;
 import com.example.automobilesapi.modules.client.model.Cliente;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -37,4 +38,7 @@ public interface ClienteRepository extends CrudRepository<Cliente, Integer> {
 
     @Query(value = "SELECT * FROM CLIENTE", nativeQuery = true)
     List<Cliente> findAllDisponiveis();
+
+    @Query(value = "SELECT * FROM CLIENTE WHERE CPF = :#{#cliente.cpf} AND SENHA = :#{#cliente.senha}", nativeQuery = true)
+    List<Cliente> verifyCliente(ClienteDTOAdminRequest cliente);
 }

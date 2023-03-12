@@ -2,6 +2,7 @@ package com.example.automobilesapi.modules.client.service;
 
 import com.example.automobilesapi.config.exception.ResourceNotFoundException;
 import com.example.automobilesapi.modules.client.dto.ClienteDTO;
+import com.example.automobilesapi.modules.client.dto.ClienteDTOAdminRequest;
 import com.example.automobilesapi.modules.client.model.Cliente;
 import com.example.automobilesapi.modules.client.repository.ClienteRepository;
 import org.springframework.stereotype.Service;
@@ -59,5 +60,14 @@ public class ClienteService {
 
     private ClienteDTO convertToDTO(Cliente cliente) {
         return cliente.convertToDTO();
+    }
+
+    public ClienteDTO verifyCliente(ClienteDTOAdminRequest cliente) {
+        List<Cliente> optionalCliente = clienteRepository.verifyCliente(cliente);
+        if (!optionalCliente.isEmpty()) {
+            return optionalCliente.get(0).convertToDTO();
+        } else {
+            throw new ResourceNotFoundException("Cliente not found with cpf " + cliente.getCpf());
+        }
     }
 }

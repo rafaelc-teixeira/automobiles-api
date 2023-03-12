@@ -14,4 +14,4 @@ INSERT INTO carro (id, autonomia, combustivel, descricao, disponibilidade, model
 
 INSERT INTO carro (id, autonomia, combustivel, descricao, disponibilidade, modelo, motor, nome, placa, potencia, taxa, valor_dia) VALUES (1003, '500 km', 'Diesel', 'SUV', true, 'Tiguan', '2.0', 'VW Tiguan', 'GHI-9012', '180 cv', 15.0, 200.0);
 
-INSERT INTO cliente (id, is_admin, cpf, nome, email, senha) VALUES (1001, true, '999.999.999-99', 'admin', 'admin@admin.com', 'admin');
+INSERT INTO cliente (id, is_admin, cpf, nome, email, senha) VALUES (1001, true, '99999999999', 'admin', 'admin@admin.com', 'admin');

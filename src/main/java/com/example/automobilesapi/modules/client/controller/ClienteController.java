@@ -1,7 +1,10 @@
 package com.example.automobilesapi.modules.client.controller;
 
 import com.example.automobilesapi.modules.client.dto.ClienteDTO;
+import com.example.automobilesapi.modules.client.dto.ClienteDTOAdminRequest;
+import com.example.automobilesapi.modules.client.dto.ClienteDTOAdminResponse;
 import com.example.automobilesapi.modules.client.service.ClienteService;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,6 +41,13 @@ public class ClienteController {
     public ResponseEntity<ClienteDTO> createCliente(@RequestBody ClienteDTO clienteDTO) {
         clienteService.createCliente(clienteDTO.toCliente());
         return ResponseEntity.created(URI.create("/api/cliente")).body(clienteDTO);
+    }
+
+    @PostMapping(path = "/verificar", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ClienteDTOAdminResponse> verifyCliente(@RequestBody ClienteDTOAdminRequest clienteDTO) {
+        ClienteDTO cliente = clienteService.verifyCliente(clienteDTO);
+        ClienteDTOAdminResponse response = new ClienteDTOAdminResponse(cliente.getAdmin(), cliente.getSenha());
+        return ResponseEntity.ok(response);
     }
 
     @PutMapping("/{id}")
