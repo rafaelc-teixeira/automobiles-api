@@ -58,7 +58,7 @@ public class ClienteController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteCarro(@PathVariable Integer id) {
+    public ResponseEntity<Void> deleteCliente(@PathVariable Integer id) {
         clienteService.deleteCliente(id);
         return ResponseEntity.noContent().build();
     }

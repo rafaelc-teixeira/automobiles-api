@@ -51,7 +51,7 @@ public class CarroService {
 
     public void deleteCarro(Integer id) {
         List<Carro> optionalCarro = carroRepository.getCarroById(id);
-        if (optionalCarro.isEmpty()) {
+        if (!optionalCarro.isEmpty()) {
             carroRepository.deleteCarro(id);
         } else {
             throw new ResourceNotFoundException("Carro not found with id " + id);
