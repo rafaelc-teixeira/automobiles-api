@@ -51,7 +51,7 @@ public class ClienteService {
 
     public void deleteCliente(Integer id) {
         List<Cliente> optionalCliente = clienteRepository.getClienteById(id);
-        if (optionalCliente.isEmpty()) {
+        if (!optionalCliente.isEmpty()) {
             clienteRepository.deleteCliente(id);
         } else {
             throw new ResourceNotFoundException("Cliente not found with id " + id);
