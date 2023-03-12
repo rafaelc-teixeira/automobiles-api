@@ -11,6 +11,7 @@ import java.net.URI;
 import java.util.List;
 
 
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 @RequestMapping("/api/carro")
 public class CarroController {
