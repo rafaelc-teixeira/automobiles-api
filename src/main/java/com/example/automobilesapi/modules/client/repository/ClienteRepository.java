@@ -41,4 +41,7 @@ public interface ClienteRepository extends CrudRepository<Cliente, Integer> {
 
     @Query(value = "SELECT * FROM CLIENTE WHERE CPF = :#{#cliente.cpf} AND SENHA = :#{#cliente.senha}", nativeQuery = true)
     List<Cliente> verifyCliente(ClienteDTOAdminRequest cliente);
+
+    @Query(value = "SELECT * FROM CLIENTE WHERE CPF = ?1", nativeQuery = true)
+    List<Cliente> verifyClienteCpf(String cpf);
 }

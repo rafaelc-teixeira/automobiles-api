@@ -6,7 +6,7 @@ CREATE TABLE carro (id SERIAL NOT NULL, autonomia VARCHAR(255) NOT NULL, combust
 
 CREATE TABLE cliente (id SERIAL NOT NULL, is_admin BOOLEAN, cpf VARCHAR(255) NOT NULL, nome VARCHAR(255) NOT NULL, email VARCHAR(255) , senha VARCHAR(255) NOT NULL, PRIMARY KEY (id));
 
-CREATE TABLE aluguel (cliente_id INTEGER NOT NULL, carro_id INTEGER NOT NULL, FOREIGN KEY (cliente_id) REFERENCES cliente (id), FOREIGN KEY (carro_id) REFERENCES carro (id));
+CREATE TABLE aluguel (cliente_id INTEGER NOT NULL, carro_id INTEGER NOT NULL, data VARCHAR(255) NOT NULL, FOREIGN KEY (cliente_id) REFERENCES cliente (id), FOREIGN KEY (carro_id) REFERENCES carro (id));
 
 INSERT INTO carro (id, autonomia, combustivel, descricao, disponibilidade, modelo, motor, nome, placa, potencia, taxa, valor_dia) VALUES (1001, '800 km', 'Gasolina', 'Carro de passeio', true, 'Fusca', '1.6', 'VW Fusca', 'ABC-1234', '60 cv', 5.0, 80.0);
 

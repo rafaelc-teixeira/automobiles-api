@@ -1,9 +1,12 @@
 package com.example.automobilesapi.modules.car.service;
 
 import com.example.automobilesapi.config.exception.ResourceNotFoundException;
+import com.example.automobilesapi.modules.car.dto.AluguelDTO;
 import com.example.automobilesapi.modules.car.dto.CarroDTO;
 import com.example.automobilesapi.modules.car.model.Carro;
 import com.example.automobilesapi.modules.car.repository.CarroRepository;
+import com.example.automobilesapi.modules.client.model.Cliente;
+import com.example.automobilesapi.modules.client.repository.ClienteRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,8 +18,11 @@ public class CarroService {
 
     private final CarroRepository carroRepository;
 
-    public CarroService(CarroRepository carroRepository) {
+    private final ClienteRepository clienteRepository;
+
+    public CarroService(CarroRepository carroRepository, ClienteRepository clienteRepository) {
         this.carroRepository = carroRepository;
+        this.clienteRepository = clienteRepository;
     }
 
     public List<CarroDTO> getAllCarros() {
@@ -74,5 +80,15 @@ public class CarroService {
         carro.setPotencia(carroDTO.getPotencia());
         carro.setAutonomia(carroDTO.getAutonomia());
         return carro;
+    }
+
+    public void createAluguel(AluguelDTO aluguel) {
+        List<Cliente> cliente = clienteRepository.verifyClienteCpf(aluguel.getCpf());
+
+        if (!cliente.isEmpty()) {
+            carroRepository.createAluguel(cliente.get(0).getId(), aluguel.getCarroId(), aluguel.getData());
+        } else {
+            throw new ResourceNotFoundException("Cliente not found with cpf " + aluguel.getCpf());
+        }
     }
 }

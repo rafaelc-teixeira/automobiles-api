@@ -40,6 +40,14 @@ public interface CarroRepository extends CrudRepository<Carro, Integer> {
 
     @Query(value = "SELECT * FROM CARRO WHERE DISPONIBILIDADE = TRUE", nativeQuery = true)
     List<Carro> findAllDisponiveis();
+
+    @Transactional
+    @Modifying
+    @Query(value = "BEGIN; " +
+                    "INSERT INTO ALUGUEL (CARRO_ID, CLIENTE_ID, DATA) VALUES (:carroId, :id, :data); " +
+                    "UPDATE CARRO SET disponibilidade = false WHERE id = (:carroId); " +
+                    "COMMIT;", nativeQuery = true)
+    void createAluguel(Integer id, Integer carroId, String data);
 //
 //    @Query(value = "SELECT * FROM CARRO WHERE ID = :id AND DISPONIBILIDADE = TRUE", nativeQuery = true)
 //    Optional<Carro> findDisponivelById(@Param("id") Integer id);

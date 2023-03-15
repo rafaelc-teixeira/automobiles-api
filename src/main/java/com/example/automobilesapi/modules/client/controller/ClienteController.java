@@ -39,6 +39,7 @@ public class ClienteController {
 
     @PostMapping
     public ResponseEntity<ClienteDTO> createCliente(@RequestBody ClienteDTO clienteDTO) {
+        clienteDTO.setSenha("");
         clienteService.createCliente(clienteDTO.toCliente());
         return ResponseEntity.created(URI.create("/api/cliente")).body(clienteDTO);
     }

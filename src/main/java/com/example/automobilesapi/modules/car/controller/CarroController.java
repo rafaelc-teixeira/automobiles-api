@@ -1,5 +1,6 @@
 package com.example.automobilesapi.modules.car.controller;
 
+import com.example.automobilesapi.modules.car.dto.AluguelDTO;
 import com.example.automobilesapi.modules.car.dto.CarroDTO;
 
 import com.example.automobilesapi.modules.car.service.CarroService;
@@ -41,6 +42,12 @@ public class CarroController {
     public ResponseEntity<CarroDTO> createCarro(@RequestBody CarroDTO carroDTO) {
         carroService.createCarro(carroDTO.toCarro());
         return ResponseEntity.created(URI.create("/api/carro")).body(carroDTO);
+    }
+
+    @PostMapping("/aluguel")
+    public ResponseEntity<String> createAluguel(@RequestBody AluguelDTO aluguel) {
+        carroService.createAluguel(aluguel);
+        return ResponseEntity.ok("Aluguel realizado com sucesso!");
     }
 
     @PutMapping("/{id}")
