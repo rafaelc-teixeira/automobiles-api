@@ -3,6 +3,7 @@ package com.example.automobilesapi.modules.car.controller;
 import com.example.automobilesapi.modules.car.dto.AluguelDTO;
 import com.example.automobilesapi.modules.car.dto.CarroDTO;
 
+import com.example.automobilesapi.modules.car.dto.DevolverCarroDTO;
 import com.example.automobilesapi.modules.car.service.CarroService;
 
 import org.springframework.http.ResponseEntity;
@@ -48,6 +49,12 @@ public class CarroController {
     public ResponseEntity<String> createAluguel(@RequestBody AluguelDTO aluguel) {
         carroService.createAluguel(aluguel);
         return ResponseEntity.ok("Aluguel realizado com sucesso!");
+    }
+
+    @PostMapping("/devolver")
+    public ResponseEntity<String> devolverCarro(@RequestBody DevolverCarroDTO devolverCarro) {
+        carroService.devolverCarro(devolverCarro);
+        return ResponseEntity.ok("Carro devolvido com sucesso!");
     }
 
     @PutMapping("/{id}")

@@ -3,6 +3,7 @@ package com.example.automobilesapi.modules.car.service;
 import com.example.automobilesapi.config.exception.ResourceNotFoundException;
 import com.example.automobilesapi.modules.car.dto.AluguelDTO;
 import com.example.automobilesapi.modules.car.dto.CarroDTO;
+import com.example.automobilesapi.modules.car.dto.DevolverCarroDTO;
 import com.example.automobilesapi.modules.car.model.Carro;
 import com.example.automobilesapi.modules.car.repository.CarroRepository;
 import com.example.automobilesapi.modules.client.model.Cliente;
@@ -90,5 +91,17 @@ public class CarroService {
         } else {
             throw new ResourceNotFoundException("Cliente not found with cpf " + aluguel.getCpf());
         }
+    }
+
+    public void devolverCarro(DevolverCarroDTO devolverCarro) {
+        List<Cliente> cliente = clienteRepository.verifyClienteCpf(devolverCarro.getCpf());
+        List<Carro> carro = carroRepository.verifyCarroPlaca(devolverCarro.getPlaca());
+
+        if (!cliente.isEmpty() && !carro.isEmpty()) {
+            carroRepository.returnCarro(cliente.get(0).getId(), carro.get(0).getId());
+        } else {
+            throw new ResourceNotFoundException("Cliente not found with cpf or placa " + devolverCarro.getCpf() + "//"+ devolverCarro.getPlaca());
+        }
+
     }
 }
