@@ -59,6 +59,12 @@ public interface CarroRepository extends CrudRepository<Carro, Integer> {
             "UPDATE CARRO SET disponibilidade = true WHERE id = (:carroId); " +
             "COMMIT;", nativeQuery = true)
     void returnCarro(Integer clienteId, Integer carroId);
+
+    @Query(value = "SELECT c.* " +
+            "FROM carro c " +
+            "INNER JOIN aluguel a ON c.id = a.carro_id " +
+            "WHERE a.cliente_id = (:id)", nativeQuery = true)
+    List<Carro> getCarrosAlugados(Integer id);
 //
 //    @Query(value = "SELECT * FROM CARRO WHERE ID = :id AND DISPONIBILIDADE = TRUE", nativeQuery = true)
 //    Optional<Carro> findDisponivelById(@Param("id") Integer id);

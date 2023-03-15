@@ -39,6 +39,12 @@ public class CarroController {
         return ResponseEntity.ok(carroDTO);
     }
 
+    @GetMapping("/alugados/{id}")
+    public ResponseEntity<List<CarroDTO>> getCarrosAlugados(@PathVariable Integer id) {
+        List<CarroDTO> carrosDTO = carroService.getCarrosAlugados(id);
+        return ResponseEntity.ok(carrosDTO);
+    }
+
     @PostMapping
     public ResponseEntity<CarroDTO> createCarro(@RequestBody CarroDTO carroDTO) {
         carroService.createCarro(carroDTO.toCarro());

@@ -104,4 +104,11 @@ public class CarroService {
         }
 
     }
+
+    public List<CarroDTO> getCarrosAlugados(Integer id) {
+        List<Carro> carros = carroRepository.getCarrosAlugados(id);
+        return carros.stream()
+                .map(this::convertToDTO)
+                .collect(Collectors.toList());
+    }
 }
