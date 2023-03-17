@@ -26,7 +26,7 @@ public class CarroService {
         this.clienteRepository = clienteRepository;
     }
 
-    public List<CarroDTO> getAllCarros() {
+    public List<CarroDTO> getAllAvailableCarros() {
         List<Carro> carros = carroRepository.findAllDisponiveis();
         return carros.stream()
                 .map(this::convertToDTO)
@@ -107,6 +107,13 @@ public class CarroService {
 
     public List<CarroDTO> getCarrosAlugados(Integer id) {
         List<Carro> carros = carroRepository.getCarrosAlugados(id);
+        return carros.stream()
+                .map(this::convertToDTO)
+                .collect(Collectors.toList());
+    }
+
+    public List<CarroDTO> getAllCarros() {
+        List<Carro> carros = carroRepository.findAllCarros();
         return carros.stream()
                 .map(this::convertToDTO)
                 .collect(Collectors.toList());

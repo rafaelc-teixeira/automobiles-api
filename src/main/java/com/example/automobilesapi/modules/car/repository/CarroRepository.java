@@ -41,6 +41,9 @@ public interface CarroRepository extends CrudRepository<Carro, Integer> {
     @Query(value = "SELECT * FROM CARRO WHERE DISPONIBILIDADE = TRUE", nativeQuery = true)
     List<Carro> findAllDisponiveis();
 
+    @Query(value = "SELECT * FROM CARRO", nativeQuery = true)
+    List<Carro> findAllCarros();
+
     @Transactional
     @Modifying
     @Query(value = "BEGIN; " +
@@ -65,12 +68,6 @@ public interface CarroRepository extends CrudRepository<Carro, Integer> {
             "INNER JOIN aluguel a ON c.id = a.carro_id " +
             "WHERE a.cliente_id = (:id)", nativeQuery = true)
     List<Carro> getCarrosAlugados(Integer id);
-//
-//    @Query(value = "SELECT * FROM CARRO WHERE ID = :id AND DISPONIBILIDADE = TRUE", nativeQuery = true)
-//    Optional<Carro> findDisponivelById(@Param("id") Integer id);
-//
-//    @Modifying
-//    @Query(value = "UPDATE CARRO SET DISPONIBILIDADE = :disponibilidade WHERE ID = :id", nativeQuery = true)
-//    void updateDisponibilidadeById(@Param("id") Integer id, @Param("disponibilidade") Boolean disponibilidade);
+
 
 }
